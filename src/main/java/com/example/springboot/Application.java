@@ -31,7 +31,7 @@ public class Application {
 	CommandLineRunner init(StorageService storageService) {
 		return(args) -> {
 			try {
-				storageService.init();
+				//storageService.init();
 			}
 			catch(Exception ex) {
 				System.out.println("-----Problem---");
