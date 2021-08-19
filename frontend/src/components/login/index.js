@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react'
 import { withRouter } from "react-router-dom";
-import history from '../history';
 
 export class Login extends Component {
 
@@ -14,11 +13,7 @@ export class Login extends Component {
     }
     submitForm = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:8087/api/public/login", 
-            {   
-                username: "vv@vv.vv",
-                    password: "sdfsdf"
-            })
+        axios.post("http://localhost:8087/api/public/login", this.state)
             .then(responce => {
                 console.log(responce);
             });
