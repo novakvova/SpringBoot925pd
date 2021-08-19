@@ -10,6 +10,7 @@ import {
 import Login from './components/Login';
 import Home from './components/Home';
 import history from './history';
+import Navbar from './components/navbar';
 
 
 class App extends Component{
@@ -24,8 +25,9 @@ class App extends Component{
     return (
 
       <Router history={history}>
-      <div>
-        <ul>
+        <Navbar />
+      <div className="container">
+        {/* <ul>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -34,7 +36,7 @@ class App extends Component{
           </li>
         </ul>
 
-        <hr />
+        <hr /> */}
 
         {/*
           A <Switch> looks through all its children <Route>
