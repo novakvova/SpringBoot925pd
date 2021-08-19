@@ -39,6 +39,7 @@ export class Login extends Component {
             <div className="row">
                 <div className="col-md-4 offset-md-4">
                     <h1>Вхід на сайт</h1>
+                    <img src="http://localhost:8087/files/1.jpg"/>
                     <form onSubmit = {this.submitForm}>
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Логін</label>
