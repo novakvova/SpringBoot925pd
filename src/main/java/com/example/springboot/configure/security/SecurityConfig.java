@@ -103,6 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()//.hasAuthority(Roles.Admin)
                 .antMatchers(String.format("%s/**", restApiDocPath)).permitAll()
                 .antMatchers(String.format("%s/**", swaggerPath)).permitAll()
+                .antMatchers("/static/**").permitAll()
                 // Our public endpoints
                 .antMatchers("/api/public/**").permitAll()
                 .antMatchers("/files/**").permitAll()
