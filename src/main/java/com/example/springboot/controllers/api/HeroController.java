@@ -1,6 +1,7 @@
 package com.example.springboot.controllers.api;
 
 import com.example.springboot.entities.Hero;
+import com.example.springboot.mytest.HeroHeroDTOMapper;
 import com.example.springboot.repositories.HereRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,14 +11,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
+//@RequiredArgsConstructor
 @RequestMapping("/api")
 public class HeroController {
     private final HereRepository heroRepository;
+    private final HeroHeroDTOMapper heroHeroDTOMapper;
 
     @Autowired
-    public HeroController(HereRepository heroRepository) {
+    public HeroController(HereRepository heroRepository, HeroHeroDTOMapper heroDTOMapper) {
         this.heroRepository = heroRepository;
+        this.heroHeroDTOMapper = heroDTOMapper;
     }
+
 
     @GetMapping("/heroes")
     public List<Hero> index() {

@@ -1,10 +1,12 @@
 package com.example.springboot.entities;
 
+import lombok.Data;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 public class Hero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,19 +22,4 @@ public class Hero {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
