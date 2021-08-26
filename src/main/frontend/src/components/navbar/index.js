@@ -20,6 +20,9 @@ export class Navbar extends Component {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/login">Вхід</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/register">Реєстрація</Link>
+                            </li>
                             {/* <li className="nav-item">
                                 <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                             </li> */}

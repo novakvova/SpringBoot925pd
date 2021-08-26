@@ -2,8 +2,8 @@ package com.example.springboot;
 
 import java.util.Arrays;
 
+import com.example.springboot.service.FilesStorageService;
 import com.example.springboot.storage.StorageProperties;
-import com.example.springboot.storage.StorageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,9 +28,11 @@ public class Application {
 //		}
 	}
 	@Bean
-	CommandLineRunner init(StorageService storageService) {
+	CommandLineRunner init(FilesStorageService storageService) {
 		return(args) -> {
 			try {
+				storageService.deleteAll();
+				storageService.init();
 				//storageService.init();
 			}
 			catch(Exception ex) {
