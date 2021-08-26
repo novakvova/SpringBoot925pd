@@ -3,13 +3,14 @@ package com.example.springboot.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.example.springboot.message.ResponseMessage;
-import com.example.springboot.model.FileInfo;
-import com.example.springboot.service.FilesStorageService;
+import com.example.springboot.storage.ResponseMessage;
+import com.example.springboot.storage.FileInfo;
+import com.example.springboot.storage.FilesStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -59,6 +60,8 @@ public class FilesController {
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         Resource file = storageService.load(filename);
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+                //.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+                .contentType(MediaType.IMAGE_JPEG)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "filename=\"" + file.getFilename() + "\"").body(file);
     }
 }

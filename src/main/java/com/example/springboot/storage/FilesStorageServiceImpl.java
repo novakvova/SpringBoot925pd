@@ -1,4 +1,4 @@
-package com.example.springboot.service;
+package com.example.springboot.storage;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

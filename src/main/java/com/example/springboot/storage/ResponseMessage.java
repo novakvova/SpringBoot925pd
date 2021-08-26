@@ -1,4 +1,4 @@
-package com.example.springboot.message;
+package com.example.springboot.storage;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
