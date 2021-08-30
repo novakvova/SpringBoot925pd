@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react'
 import { withRouter } from "react-router-dom";
 import {serverUrl} from "../../config";
+import { validationFields } from './validate';
 
 export class Login extends Component {
 
@@ -10,14 +11,24 @@ export class Login extends Component {
     // }
     state = {
         username: "222",
-        password: ""
+        password: "",
+        errors: {}
     }
     submitForm = (e) => {
         e.preventDefault();
-        axios.post(`${serverUrl}api/public/login`, this.state)
-            .then(responce => {
-                console.log(responce);
-            });
+
+        let errors = validationFields(this.state);
+        const isValid = Object.keys(errors).length == 0;
+        if (isValid) {
+
+            axios.post(`${serverUrl}api/public/login`, this.state)
+                .then(responce => {
+                    console.log(responce);
+                });
+        }
+        else {
+            this.setState({errors: errors});
+        }
         console.log('data send = ', this.state);
     }
 
@@ -29,7 +40,9 @@ export class Login extends Component {
     }
     
     render() {
-        const {username, password} = this.state; //дестурктуризація
+        const {username, 
+            password,
+            errors} = this.state; //дестурктуризація
         console.log(this);
         return (
             <div className="row">
@@ -44,7 +57,7 @@ export class Login extends Component {
                                 name="username" 
                                 value={username}
                                 onChange={this.onChangeInputHandler}/>
-                            {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
+                            
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Пароль</label>
@@ -53,6 +66,7 @@ export class Login extends Component {
                                 name="password"
                                 value={password}
                                 onChange={this.onChangeInputHandler} />
+                            {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
                         </div>
                         <button type="submit" className="btn btn-primary">Вхід</button>
                     </form>
