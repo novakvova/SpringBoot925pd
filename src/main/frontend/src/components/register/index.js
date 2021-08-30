@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { withRouter } from "react-router-dom";
 import {serverUrl} from "../../config";
 
+
+
 export class Register extends Component {
 
     // componentDidMount=() =>{
@@ -56,7 +58,7 @@ export class Register extends Component {
 
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Фото</label>
-                            <input type="password" className="form-control" 
+                            <input type="password" className="form-control"
                                 id="password" 
                                 name="password"
                                 value={password}

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { withRouter } from "react-router-dom";
 import {serverUrl} from "../../config";
 import { validationFields } from './validate';
+import classnames from "classnames";
 
 export class Login extends Component {
 
@@ -61,7 +62,8 @@ export class Login extends Component {
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Пароль</label>
-                            <input type="password" className="form-control" 
+                            <input type="password" className={classnames("form-control",
+                                                        {"is-invalid": errors.password})}
                                 id="password" 
                                 name="password"
                                 value={password}
