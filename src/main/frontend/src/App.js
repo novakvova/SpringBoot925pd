@@ -28,8 +28,8 @@ class App extends Component{
 
       <Router history={history}>
         <Navbar />
-      <div className="container">
-        {/* <ul>
+        <div className="container">
+          {/* <ul>
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -40,26 +40,26 @@ class App extends Component{
 
         <hr /> */}
 
-        {/*
+          {/*
           A <Switch> looks through all its children <Route>
           elements and renders the first one whose path
           matches the current URL. Use a <Switch> any time
           you have multiple routes, but you want only one
           of them to render at a time
         */}
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <UploadFiles />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/register">
+              <UploadFiles />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
