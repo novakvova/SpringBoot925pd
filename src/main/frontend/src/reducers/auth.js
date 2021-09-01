@@ -15,7 +15,7 @@ import {
       case LOGIN_AUTH:
         return { 
           isAuth: true,
-          username: "Віктор"
+          username: payload.fullName
         };
 
       default:

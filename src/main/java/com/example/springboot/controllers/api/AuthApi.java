@@ -43,9 +43,11 @@ public class AuthApi {
             com.example.springboot.entities.User dbUser = userRepository
                     .findByUsername(user.getUsername());
             UserView userView = new UserView();
-            userView.setUsername(user.getUsername());
+            String token = jwtTokenUtil.generateAccessToken(dbUser);
+            userView.setUsername(token);
+            userView.setFullName("Test Data server");
             return ResponseEntity.ok()
-                    .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(dbUser))
+                    .header(HttpHeaders.AUTHORIZATION, token)
                     .body(userView);
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

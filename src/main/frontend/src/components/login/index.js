@@ -13,8 +13,8 @@ export class Login extends Component {
     //     this.props.history.push('/');
     // }
     state = {
-        username: "222",
-        password: "",
+        username: "semen@gmail.com",
+        password: "123456",
         errors: {}
     }
     submitForm = (e) => {
@@ -25,12 +25,9 @@ export class Login extends Component {
         if (isValid) {
 
             this.props.loginUser(
-                {email: this.state.username, password: this.state.password}
+                {username: this.state.username, password: this.state.password}
                 );
-            // axios.post(`${serverUrl}api/public/login`, this.state)
-            //     .then(responce => {
-            //         console.log(responce);
-            //     });
+           
         }
         else {
             this.setState({errors: errors});
