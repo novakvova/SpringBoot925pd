@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import {serverUrl} from "../../config";
 import { validationFields } from './validate';
 import classnames from "classnames";
+import { connect } from 'react-redux';
+import { loginUser } from '../../actions/auth';
 
 export class Login extends Component {
 
@@ -22,10 +24,13 @@ export class Login extends Component {
         const isValid = Object.keys(errors).length == 0;
         if (isValid) {
 
-            axios.post(`${serverUrl}api/public/login`, this.state)
-                .then(responce => {
-                    console.log(responce);
-                });
+            this.props.loginUser(
+                {email: this.state.username, password: this.state.password}
+                );
+            // axios.post(`${serverUrl}api/public/login`, this.state)
+            //     .then(responce => {
+            //         console.log(responce);
+            //     });
         }
         else {
             this.setState({errors: errors});
@@ -44,12 +49,13 @@ export class Login extends Component {
         const {username, 
             password,
             errors} = this.state; //дестурктуризація
-        console.log(this);
+        //console.log(this);
+        //console.log("Login props", this.props);
         return (
             <div className="row">
                 <div className="col-md-4 offset-md-4">
                     <h1>Вхід на сайт</h1>
-                    <img src="http://localhost:8087/files/1.jpg"/>
+                    {/* <img src="http://localhost:8087/files/1.jpg"/> */}
                     <form onSubmit = {this.submitForm}>
                         <div className="mb-3">
                             <label htmlFor="username" className="form-label">Логін</label>
@@ -78,4 +84,4 @@ export class Login extends Component {
     }
 }
 
-export default withRouter(Login);
+export default connect(null, {loginUser})(Login);
