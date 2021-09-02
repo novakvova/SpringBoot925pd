@@ -1,6 +1,6 @@
 import authSerivce from "../services/auth.serivce";
 import {
-    LOGIN_AUTH
+    LOGIN_AUTH, LOGOUT_AUTH
   } from "./types";
 
   export const loginUser = (data) => async (dispatch) => {
@@ -8,14 +8,33 @@ import {
       const res = await authSerivce.login(data);
   
       console.log("token", res.data.username);
-      dispatch({
-        type: LOGIN_AUTH,
-        payload: res.data,
-      });
-  
-      return Promise.resolve(res.data);
+
+      localStorage.setItem("user", res.data.fullName);
+
+      return userAuth(res.data, dispatch);
 
     } catch (err) {
       return Promise.reject(err);
     }
+  };
+
+  export const logoutUser = ()=> (dispatch) => {
+
+    //localStorage.removeItem("user");
+    dispatch({
+      type: LOGOUT_AUTH,
+    });
+
+  };
+
+  export const userAuth = (user, dispatch) => {
+
+    
+    dispatch({
+      type: LOGIN_AUTH,
+      payload: user,
+    });
+
+    return Promise.resolve(user);
+
   };

@@ -1,5 +1,5 @@
 import {
-    LOGIN_AUTH
+    LOGIN_AUTH, LOGOUT_AUTH
   } from "../actions/types";
   
   const initialState = {
@@ -17,6 +17,12 @@ import {
           isAuth: true,
           username: payload.fullName
         };
+
+        case LOGOUT_AUTH:
+          return { 
+            isAuth: false,
+            username: ""
+          };
 
       default:
         return auth;

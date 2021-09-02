@@ -2,8 +2,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { logoutUser } from "../../actions/auth";
 
 export class Navbar extends Component {
+
     render() {
         console.log("Navbar props", this.props);
         const {isAuth, username} = this.props; //деструктуризація
@@ -49,7 +51,8 @@ export class Navbar extends Component {
                                     <Link className="nav-link" to="/profile">{username}</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/logout">Вихід</Link>
+                                    <a className="nav-link"
+                                        onClick={()=>this.props.logoutUser()}>Вихід</a>
                                 </li>
                             </ul>
                         }
@@ -67,4 +70,4 @@ function mapState(stateRedux) {
     };
 }
 
-export default connect(mapState)(Navbar);
+export default connect(mapState, {logoutUser})(Navbar);
