@@ -12,7 +12,7 @@
 <body>
 <div class="container">
     <h1>Робота з фото</h1>
-    <form>
+    <form id="addForm">
         <div class="mb-3">
             <div class="row" id="contentImage">
                 <div class="col-md-2">
@@ -24,6 +24,8 @@
             </div>
         </div>
 
+        <input class="btn btn-danger" type="submit" value="Завантажити на сервер">
+
     </form>
 
 
@@ -33,11 +35,14 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js"></script>
+
 
 <script>
     //window.onload = function();
     window.addEventListener("load", function() {
-        btnAddImage= document.getElementById("btnAddImage");
+        let addForm = document.getElementById("addForm");
+        let btnAddImage= document.getElementById("btnAddImage");
         let id = 1;
         btnAddImage.addEventListener("click", function() {
             let imageName="image"+id;
@@ -58,6 +63,25 @@
                 $("#contentImage").prepend(content);
             }
             console.log("click btn");
+        });
+
+        addForm.addEventListener("submit", async function(e) {
+            e.preventDefault();
+            console.log("Відправляємо запит на сервер");
+            let url = "/upload";
+            var formData = new FormData();
+            var el = document.querySelector('#contentImage');
+            var matches = el.querySelectorAll('input[data-files]');
+
+            for (var i = 0; i < matches.length; i++) {
+                formData.append("files", matches[i].files[0]);
+            }
+            let responce = await axios.post(url, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
         });
     });
 </script>
