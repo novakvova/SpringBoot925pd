@@ -5,9 +5,63 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>React App</title>
 </head>
 <body>
-    <h1>Hello Spring Boot</h1>
+<div class="container">
+    <h1>Робота з фото</h1>
+    <form>
+        <div class="mb-3">
+            <div class="row" id="contentImage">
+                <div class="col-md-2">
+                    <img src="https://cdn2.iconfinder.com/data/icons/leto-most-searched-mix-5/64/__image_plus_add-512.png"
+                         width="100%" alt="Пошук фото"
+                         style="cursor: pointer"
+                         id="btnAddImage">
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    //window.onload = function();
+    window.addEventListener("load", function() {
+        btnAddImage= document.getElementById("btnAddImage");
+        let id = 1;
+        btnAddImage.addEventListener("click", function() {
+            let imageName="image"+id;
+            let inputFile = `<input type="file" data-files style="display:none" class="form-control" id="${imageName}">`;
+            $("#contentImage").prepend(inputFile);
+            document.getElementById(imageName).click();
+            document.getElementById(imageName).onchange= function (e){
+                console.log(e.target.files[0].name);
+
+                let content =
+                `<div class="col-md-2">
+                    <img src="${URL.createObjectURL(e.target.files[0])}"
+                         width="100%" alt="обране фото"
+                         style="cursor: pointer"
+                         id="btnAddImage">
+                </div>`;
+
+                $("#contentImage").prepend(content);
+            }
+            console.log("click btn");
+        });
+    });
+</script>
+
+
 </body>
 </html>
