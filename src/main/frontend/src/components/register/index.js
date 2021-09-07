@@ -1,9 +1,8 @@
-import axios from 'axios';
 import React, { Component } from 'react'
-import { withRouter } from "react-router-dom";
-import {serverUrl} from "../../config";
-
-
+import { validationFields } from './validate';
+import classnames from "classnames";
+import { connect } from 'react-redux';
+import { registerUser } from '../../actions/auth';
 
 export class Register extends Component {
 
@@ -11,15 +10,40 @@ export class Register extends Component {
     //     this.props.history.push('/');
     // }
     state = {
-        username: "222",
-        password: ""
+        username: "semen@gmail.com",
+        password: "123456",
+        confirmPassword: "123456",
+        fullName: "Іван Васильович",
+        errors: {}
     }
     submitForm = (e) => {
         e.preventDefault();
-        axios.post(`${serverUrl}api/public/login`, this.state)
-            .then(responce => {
-                console.log(responce);
-            });
+
+        let errors = validationFields(this.state);
+        const isValid = Object.keys(errors).length == 0;
+        if (isValid) {
+
+            this.props.registerUser(
+                { 
+                    username: this.state.username, 
+                    password: this.state.password,
+                    confirmPassword: this.state.confirmPassword,
+                    fullName: this.state.fullName
+                }
+            )
+            .then(
+                responce => {
+                    console.log("redirect to home page")
+                },
+                error => {
+                    this.setState({ errors: error.response.data} );
+                    console.log("registe problem",  error.response.data)
+                });
+
+        }
+        else {
+            this.setState({ errors: errors });
+        }
         console.log('data send = ', this.state);
     }
 
@@ -29,42 +53,72 @@ export class Register extends Component {
             [target.name]: target.value
         });
     }
-    
+
     render() {
-        const {username, password} = this.state; //дестурктуризація
-        console.log(this);
+        console.log("---register---", this.props);
+        const { username,
+            password,
+            confirmPassword,
+            fullName,
+            errors } = this.state; //дестурктуризація
         return (
             <div className="row">
                 <div className="col-md-4 offset-md-4">
                     <h1>Реєстрація на сайт</h1>
-                    <form onSubmit = {this.submitForm}>
+                    {/* <img src="http://localhost:8087/files/1.jpg"/> */}
+                    <form onSubmit={this.submitForm}>
+
+                    {!!errors.message && 
+                    <div className="alert alert-danger" role="alert">
+                        {errors.message}
+                    </div>
+                    }
+                        
                         <div className="mb-3">
-                            <label htmlFor="username" className="form-label">Пошта</label>
-                            <input type="text" className="form-control" 
-                                id="username" 
-                                name="username" 
-                                value={username}
-                                onChange={this.onChangeInputHandler}/>
-                            {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Пароль</label>
-                            <input type="password" className="form-control" 
-                                id="password" 
-                                name="password"
-                                value={password}
+                            <label htmlFor="fullName" className="form-label">Повне ім'я</label>
+                            <input type="text" className={classnames("form-control",
+                                { "is-invalid": errors.fullName })}
+                                id="fullName"
+                                name="fullName"
+                                value={fullName}
                                 onChange={this.onChangeInputHandler} />
+                            {!!errors.fullName && <div className="invalid-feedback">{errors.fullName}</div>}
                         </div>
 
                         <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Фото</label>
-                            <input type="password" className="form-control"
-                                id="password" 
+                            <label htmlFor="username" className="form-label">Логін</label>
+                            <input type="text" className="form-control"
+                                id="username"
+                                name="username"
+                                value={username}
+                                onChange={this.onChangeInputHandler} />
+
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Пароль</label>
+                            <input type="password" className={classnames("form-control",
+                                { "is-invalid": errors.password })}
+                                id="password"
                                 name="password"
                                 value={password}
                                 onChange={this.onChangeInputHandler} />
+                            {!!errors.password && <div className="invalid-feedback">{errors.password}</div>}
+
                         </div>
-                        <button type="submit" className="btn btn-primary">Вхід</button>
+
+                        <div className="mb-3">
+                            <label htmlFor="confirmPassword" className="form-label">Повтор пароль</label>
+                            <input type="password" className={classnames("form-control",
+                                { "is-invalid": errors.confirmPassword })}
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                value={confirmPassword}
+                                onChange={this.onChangeInputHandler} />
+                            {!!errors.confirmPassword && <div className="invalid-feedback">{errors.confirmPassword}</div>}
+                        </div>
+
+
+                        <button type="submit" className="btn btn-primary">Реєстрація</button>
                     </form>
                 </div>
             </div>
@@ -72,4 +126,5 @@ export class Register extends Component {
     }
 }
 
-export default withRouter(Register);
+
+export default connect(null, {registerUser})(Register);

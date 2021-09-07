@@ -11,8 +11,8 @@ import Login from './components/login';
 import Home from './components/Home';
 import history from './history';
 import Navbar from './components/navbar';
-import { Register } from './components/register';
-import UploadFiles from "./components/upload-files.component";
+import Register from './components/register';
+// import UploadFiles from "./components/upload-files.component";
 
 
 class App extends Component{
@@ -55,7 +55,7 @@ class App extends Component{
               <Login />
             </Route>
             <Route path="/register">
-              <UploadFiles />
+              <Register/>
             </Route>
           </Switch>
         </div>

@@ -47,7 +47,7 @@ export class Login extends Component {
             password,
             errors} = this.state; //дестурктуризація
         //console.log(this);
-        //console.log("Login props", this.props);
+        console.log("Login props", this.props);
         return (
             <div className="row">
                 <div className="col-md-4 offset-md-4">
