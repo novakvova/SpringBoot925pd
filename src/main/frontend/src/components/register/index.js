@@ -3,6 +3,7 @@ import { validationFields } from './validate';
 import classnames from "classnames";
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/auth';
+import ImageSelect from '../common/image-select';
 
 export class Register extends Component {
 
@@ -93,6 +94,11 @@ export class Register extends Component {
                                 value={username}
                                 onChange={this.onChangeInputHandler} />
 
+                        </div>
+
+                        <div className="mb-3">
+                            <label className="form-label">Обрати фото</label>
+                            <ImageSelect />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="password" className="form-label">Пароль</label>

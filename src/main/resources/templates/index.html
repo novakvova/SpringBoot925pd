@@ -47,11 +47,11 @@
         btnAddImage.addEventListener("click", function() {
             let imageName="image"+id++;
             let div=$(`<div class="col-md-2"></div>`);
-            let inputFile = `<input type="file" data-files style="display:none" class="form-control" id="${imageName}">`;
+            let inputFile = $(`<input type="file" data-files style="display:none" class="form-control" id="${imageName}">`);
             div.prepend(inputFile);
-            $("#contentImage").prepend(div);
-            document.getElementById(imageName).click();
-            document.getElementById(imageName).onchange= function (e){
+
+            inputFile.click();
+            inputFile.on("change", function (e){
                 console.log(e.target.files[0].name);
                 let content =
                 `<div>
@@ -63,11 +63,12 @@
                 let btnDelete=$(`<button class="btn-close"></button>`);
                 div.prepend(content);
                 div.prepend(btnDelete);
+                $("#contentImage").prepend(div);
                 btnDelete.on('click', function(e) {
                     e.preventDefault();
                     console.log("remove");
                 });
-            }
+            });
             console.log("click btn");
         });
 
