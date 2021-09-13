@@ -15,8 +15,8 @@ java -jar target\javaapp.jar --server.port=8085
 
 mvn clean package
 
-java -jar target/javaapp.jar
+java -jar target/javaapp.jar --server.port=8087
 
-http://localhost:8080/
+http://localhost:8087/
 
 User | login: semen@gmail.com | password: 123456

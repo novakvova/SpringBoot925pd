@@ -12,6 +12,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 @Component
 public class DatabaseLoader implements CommandLineRunner {
 
@@ -43,9 +45,11 @@ public class DatabaseLoader implements CommandLineRunner {
 
         if(this.userRepository.count()==0)
         {
-            this.userRepository.save(
-                    new User("semen@gmail.com",passwordEncoder.encode("123456"))
-            );
+            User user = new User("semen@gmail.com",passwordEncoder.encode("123456"));
+            user.setRoles(Arrays.asList(
+                    roleRepository.findByName(Roles.Admin)));
+            this.userRepository.save(user);
+
         }
     }
 }
