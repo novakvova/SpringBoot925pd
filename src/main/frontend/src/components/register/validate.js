@@ -8,6 +8,14 @@ function validationFields(items) {
         };
     }
 
+    if(items.fullName.trim() == '')
+    {
+        errors = {
+            ...errors,
+            fullName: "Поле повне ім'я є пустим"
+        };
+    }
+
     if(items.password.trim() == '')
     {
         errors = {
