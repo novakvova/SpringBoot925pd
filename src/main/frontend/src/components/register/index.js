@@ -12,17 +12,25 @@ const Register = () => {
         username: "semen@gmail.com",
         password: "123456",
         confirmPassword: "123456",
-        fullName: "Іван Васильович",
-        errors: {}
+        fullName: "Іван Васильович"
     };
 
-    const [register, setRegister] = useState(initialState);
+    const initialStateError = {
+        username: "",
+        password: "",
+        fullName: "",
+        confirmPassword: "",
+        message: ""
+    };
+
+    const [values, setValues] = useState(initialState);
+    const [errors, setErrors] = useState(initialStateError);
 
     const dispatch = useDispatch();
 
     const onChangeInputHandler = (e) => {
         var target = e.target;
-        setRegister({...register, [target.name]: target.value});
+        setValues({ ...register, [target.name]: target.value });
     }
 
     const submitForm = (e) => {
@@ -32,93 +40,84 @@ const Register = () => {
         const isValid = Object.keys(errors).length == 0;
         if (isValid) {
             dispatch(registerUser(
-                { 
-                    username: register.username, 
+                {
+                    username: register.username,
                     password: register.password,
                     confirmPassword: register.confirmPassword,
                     fullName: register.state.fullName
                 }
             ))
-            .then(
-                responce => {
-                    console.log("redirect to home page")
-                },
-                error => {
-                    //this.setState({ errors: error.response.data} );
-                    console.log("registe problem",  error.response.data)
-                });
+                .then(
+                    responce => {
+                        console.log("redirect to home page")
+                    },
+                    error => {
+                        //this.setState({ errors: error.response.data} );
+                        console.log("registe problem", error.response.data)
+                    });
 
         }
         else {
-            setRegister({...register, errors: errors});
+            setErrors({ ...errors, errors: errors });
             //this.setState({ errors: errors });
         }
         console.log('data send = ', register);
     }
 
-    
+
 
     return (
         <div className="row">
             <div className="col-md-4 offset-md-4">
                 <h1>Реєстрація на сайт</h1>
-                <form  onSubmit={submitForm}>
+                <form onSubmit={submitForm}>
 
-                    {!!register.errors.message &&
+                    {!!errors.message &&
                         <div className="alert alert-danger" role="alert">
-                            {register.errors.message}
+                            {errors.message}
                         </div>
                     }
-                        
-                         <div className="mb-3">
-                            <label htmlFor="fullName" className="form-label">Повне ім'я</label>
-                             <input type="text" className={classnames("form-control",
-                                 { "is-invalid": register.errors.fullName })}
-                                 id="fullName"
-                                 name="fullName"
-                                 value={register.fullName}
-                                 onChange={onChangeInputHandler} />
-                             {!!register.errors.fullName && <div className="invalid-feedback">{register.errors.fullName}</div>}
-                         </div>
 
-                         <div className="mb-3">
-                             <label htmlFor="username" className="form-label">Логін</label>
-                             <input type="text" className="form-control"
-                                 id="username"
-                                 name="username"
-                                 value={register.username}
-                                 onChange={onChangeInputHandler} />
-                         </div>
-                         <div className="mb-3">
-                             <label className="form-label">Обрати фото</label>
-                             <ImageSelect />
-                         </div>
-                         <div className="mb-3">
-                             <label htmlFor="password" className="form-label">Пароль</label>
-                             <input type="password" className={classnames("form-control",
-                                 { "is-invalid": register.errors.password })}
-                                 id="password"
-                                 name="password"
-                                 value={register.password}
-                                 onChange={onChangeInputHandler} />
-                             {!!register.errors.password && <div className="invalid-feedback">{register.errors.password}</div>}
+                    <TextFieldGroup
+                        field="fullName"
+                        value={values.fullName}
+                        label="ПІБ"
+                        error={errors.fullName}
+                        onChange={onChangeInputHandler}
+                    />
 
-                         </div>
+                    <TextFieldGroup
+                        field="username"
+                        value={values.username}
+                        label="Логін"
+                        error={errors.username}
+                        onChange={onChangeInputHandler}
+                    />
 
-                         <div className="mb-3">
-                             <label htmlFor="confirmPassword" className="form-label">Повтор пароль</label>
-                             <input type="password" className={classnames("form-control",
-                                 { "is-invalid": register.errors.confirmPassword })}
-                                 id="confirmPassword"
-                                 name="confirmPassword"
-                                 value={register.confirmPassword}
-                                 onChange={onChangeInputHandler} />
-                             {!!register.errors.confirmPassword && <div className="invalid-feedback">{register.errors.confirmPassword}</div>}
-                         </div>
+                    <div className="mb-3">
+                        <label className="form-label">Обрати фото</label>
+                        <ImageSelect />
+                    </div>
 
 
-                         <button type="submit" className="btn btn-primary">Реєстрація</button>
-                     </form>
+                    <TextFieldGroup
+                        field="password"
+                        value={values.password}
+                        label="Пароль"
+                        error={errors.password}
+                        onChange={onChangeInputHandler}
+                    />
+
+                    <TextFieldGroup
+                        field="confirmPassword"
+                        value={values.confirmPassword}
+                        label="Повтор пароль"
+                        error={errors.confirmPassword}
+                        onChange={onChangeInputHandler}
+                    />
+
+                    <button type="submit" className="btn btn-primary">Реєстрація</button>
+                </form>
             </div>
         </div>
     );
@@ -197,7 +196,7 @@ export default Register
 //                         {errors.message}
 //                     </div>
 //                     }
-                        
+
 //                         <div className="mb-3">
 //                             <label htmlFor="fullName" className="form-label">Повне ім'я</label>
 //                             <input type="text" className={classnames("form-control",
